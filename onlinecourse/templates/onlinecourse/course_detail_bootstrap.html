@@ -74,15 +74,17 @@
             <!-- <HINT> For each question choice, you may create a checkbox input like
             <input type="check" name="choice_{{choice.id}}" id="{{choice.id}}" ...>
             -->
-
-            <!-- A choice submission form example
-            <form id="questionform" action="point to a submit view" method="post">
-                        ... for each question in the course ...
+            {%if user.is_authenticated %}
+            <button type="button" class="btn btn-default">Start Exam</button>
+            <div id="exam" class="collapse">
+            <!---- A choice submission form example"""--->
+            <form id="questionform" action="{% url 'onlinecourse:submit' course.id %" method="post">
+                    {% for question in course,question_set.all %} <!--for each question in the course ...-->
                         <div class="card mt-1">
                             <div class="card-header"><h5>{{ question.question_text}}</h5></div>
                             {% csrf_token %}
                             <div class="form-group">
-                               ... for each choice in the question ...
+                                {% for choice in question.choice_set.all %}   <!----... for each choice in the question .-->
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input type="checkbox" name="choice_{{choice.id}}"
